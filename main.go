@@ -31,11 +31,13 @@ func StartCheckout(items map[string]Item) *Checkout {
 
 // scan adds an item to the empty cart.
 func (c *Checkout) Scan(itemName string) error {
-  _, ok := c.items[itemName] 
+    _, ok := c.items[itemName]
     if !ok {
         return fmt.Errorf("item %s not found", itemName)
     }
-    c.cart[itemName]++ 
+    c.cart[itemName]++
+    fmt.Printf("scanned item: %s, current quantity in cart: %d\n", itemName, c.cart[itemName])
+    fmt.Println("cart contents:", c.cart)
     return nil
 }
 
@@ -46,9 +48,12 @@ func (c *Checkout) GetTotalPrice() int {
         item := c.items[itemName]
         specialPrice := item.SpecialPrice
         if specialPrice.Quantity > 0 && quantity >= specialPrice.Quantity {
-            totalPrice += (quantity / specialPrice.Quantity) * specialPrice.Price
+            specialOfferCount := quantity / specialPrice.Quantity
+            totalPrice += specialOfferCount * specialPrice.Price
+           
             quantity %= specialPrice.Quantity
         }
+      
         totalPrice += quantity * item.UnitPrice
     }
     return totalPrice
