@@ -39,4 +39,18 @@ func (c *Checkout) Scan(itemName string) error {
     return nil
 }
 
+// get total price calculates the total price of the items in the cart
+func (c *Checkout) GetTotalPrice() int {
+    totalPrice := 0
+    for itemName, quantity := range c.cart {
+        item := c.items[itemName]
+        specialPrice := item.SpecialPrice
+        if specialPrice.Quantity > 0 && quantity >= specialPrice.Quantity {
+            totalPrice += (quantity / specialPrice.Quantity) * specialPrice.Price
+            quantity %= specialPrice.Quantity
+        }
+        totalPrice += quantity * item.UnitPrice
+    }
+    return totalPrice
+}
 
