@@ -54,3 +54,42 @@ func (c *Checkout) GetTotalPrice() int {
     return totalPrice
 }
 
+// uses checkout system by scanning items and calculating the total price
+func main() {
+    items := map[string]Item{
+        "A": {
+            Name:      "A",
+            UnitPrice: 50,
+            SpecialPrice: SpecialPrice{
+                Quantity: 3,
+                Price:    130,
+            },
+        },
+        "B": {
+            Name:      "B",
+            UnitPrice: 30,
+            SpecialPrice: SpecialPrice{
+                Quantity: 2,
+                Price:    45,
+            },
+        },
+        "C": {
+            Name:      "C",
+            UnitPrice: 20,
+        },
+        "D": {
+            Name:      "D",
+            UnitPrice: 15,
+        },
+    }
+
+    checkout := StartCheckout(items)
+    checkout.Scan("A")
+    checkout.Scan("B")
+    checkout.Scan("A")
+    checkout.Scan("C")
+    checkout.Scan("D")
+
+    totalPrice := checkout.GetTotalPrice()
+    fmt.Println("Total Price:", totalPrice) // output should be 175
+}
