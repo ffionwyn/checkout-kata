@@ -36,8 +36,6 @@ func (c *Checkout) Scan(itemName string) error {
         return fmt.Errorf("item %s not found", itemName)
     }
     c.cart[itemName]++
-    fmt.Printf("scanned item: %s, current quantity in cart: %d\n", itemName, c.cart[itemName])
-    fmt.Println("cart contents:", c.cart)
     return nil
 }
 
@@ -50,10 +48,8 @@ func (c *Checkout) GetTotalPrice() int {
         if specialPrice.Quantity > 0 && quantity >= specialPrice.Quantity {
             specialOfferCount := quantity / specialPrice.Quantity
             totalPrice += specialOfferCount * specialPrice.Price
-           
             quantity %= specialPrice.Quantity
         }
-      
         totalPrice += quantity * item.UnitPrice
     }
     return totalPrice
@@ -66,7 +62,7 @@ func main() {
             Name:      "A",
             UnitPrice: 50,
             SpecialPrice: SpecialPrice{
-                Quantity: 3,
+                Quantity: 3, // special price: 3 for 130
                 Price:    130,
             },
         },
@@ -74,7 +70,7 @@ func main() {
             Name:      "B",
             UnitPrice: 30,
             SpecialPrice: SpecialPrice{
-                Quantity: 2,
+                Quantity: 2, // special price: 2 for 45
                 Price:    45,
             },
         },
@@ -89,11 +85,13 @@ func main() {
     }
 
     checkout := StartCheckout(items)
-    checkout.Scan("A")
-    checkout.Scan("B")
-    checkout.Scan("A")
-    checkout.Scan("C")
-    checkout.Scan("D")
+    checkout.Scan("A") // trigger special price for A
+    checkout.Scan("A") 
+	checkout.Scan("A") 
+    checkout.Scan("B") // trigger special price for B
+	checkout.Scan("B") 
+    checkout.Scan("C") // normal price for C
+    checkout.Scan("D") // normal price for D
 
     totalPrice := checkout.GetTotalPrice()
     fmt.Println("Total Price:", totalPrice) 
