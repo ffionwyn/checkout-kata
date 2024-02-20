@@ -19,3 +19,10 @@ type Checkout struct {
     cart  map[string]int
 }
 
+// start checkout initializes a new instance with provided items
+func StartCheckout(items map[string]Item) *Checkout {
+    return &Checkout{
+        items: items,
+        cart:  make(map[string]int),
+    }
+}
