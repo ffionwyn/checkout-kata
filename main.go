@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // item struct to represent each item.
 type Item struct {
     Name         string
@@ -26,3 +28,15 @@ func StartCheckout(items map[string]Item) *Checkout {
         cart:  make(map[string]int),
     }
 }
+
+// scan adds an item to the empty cart
+func (c *Checkout) Scan(itemName string) error {
+  _, ok := c.items[itemName] 
+    if !ok {
+        return fmt.Errorf("item %s not found", itemName)
+    }
+    c.cart[itemName]++ 
+    return nil
+}
+
+
