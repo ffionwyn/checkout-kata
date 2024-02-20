@@ -40,6 +40,10 @@ func main() {
     checkout.Scan("C") // normal price for C
     checkout.Scan("D") // normal price for D
 
-    totalPrice := checkout.GetTotalPrice()
+	totalPrice, err := checkout.GetTotalPrice()
+   		if err != nil {
+        fmt.Println("Error calculating total price:", err)
+        return
+    }
     fmt.Println("Total Price:", totalPrice) 
 }
