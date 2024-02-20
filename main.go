@@ -21,7 +21,7 @@ type Checkout struct {
     cart  map[string]int
 }
 
-// start checkout initializes a new instance with provided items
+// start checkout initializes a new instance with provided items.
 func StartCheckout(items map[string]Item) *Checkout {
     return &Checkout{
         items: items,
@@ -29,7 +29,7 @@ func StartCheckout(items map[string]Item) *Checkout {
     }
 }
 
-// scan adds an item to the empty cart
+// scan adds an item to the empty cart.
 func (c *Checkout) Scan(itemName string) error {
   _, ok := c.items[itemName] 
     if !ok {
@@ -39,7 +39,7 @@ func (c *Checkout) Scan(itemName string) error {
     return nil
 }
 
-// get total price calculates the total price of the items in the cart
+// get total price calculates the total price of the items in the cart.
 func (c *Checkout) GetTotalPrice() int {
     totalPrice := 0
     for itemName, quantity := range c.cart {
@@ -54,7 +54,7 @@ func (c *Checkout) GetTotalPrice() int {
     return totalPrice
 }
 
-// uses checkout system by scanning items and calculating the total price
+// uses checkout system by scanning items and calculating the total price.
 func main() {
     items := map[string]Item{
         "A": {
@@ -91,5 +91,5 @@ func main() {
     checkout.Scan("D")
 
     totalPrice := checkout.GetTotalPrice()
-    fmt.Println("Total Price:", totalPrice) // output should be 175
+    fmt.Println("Total Price:", totalPrice) 
 }
