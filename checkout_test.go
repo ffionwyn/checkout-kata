@@ -42,3 +42,58 @@ func TestScan(t *testing.T) {
         t.Logf("Expected error for scanning an item with an empty name: %v", err)
     }
 }
+
+func TestGetTotalPrice(t *testing.T) {
+	// map for testing.
+	items := map[string]Item{
+		"A": {
+			Name:      "A",
+			UnitPrice: 50,
+			SpecialPrice: SpecialPrice{
+				Quantity: 3,
+				Price:    130,
+			},
+		},
+		"B": {
+			Name:      "B",
+			UnitPrice: 30,
+			SpecialPrice: SpecialPrice{
+				Quantity: 2,
+				Price:    45,
+			},
+		},
+		"C": {
+			Name:      "C",
+			UnitPrice: 20,
+		},
+		"D": {
+			Name:      "D",
+			UnitPrice: 15,
+		},
+	}
+	checkout := StartCheckout(items)
+
+	// case 1: no items scanned.
+	totalPrice, err := checkout.GetTotalPrice()
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+	if totalPrice != 0 {
+		t.Errorf("Expected total price to be 0, got %d", totalPrice)
+	}
+
+	// case 2: scan items and check total price. 
+	checkout.Scan("A")
+	checkout.Scan("A")
+	checkout.Scan("B")
+	checkout.Scan("C")
+	totalPrice, err = checkout.GetTotalPrice()
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+	expectedTotal := 50 + 50 + 30 + 20 
+	if totalPrice != expectedTotal {
+		t.Errorf("Expected total price to be %d, got %d", expectedTotal, totalPrice)
+	}
+}
+
