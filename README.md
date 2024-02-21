@@ -31,3 +31,10 @@ Error handling has been implemented for invalid item names, missing special pric
 Structure
 
 The code is organised into separate files (main.go, checkout.go, and item.go) for better maintainability and readability.
+
+Unit Tests
+The checkout system includes unit tests to ensure the correctness of its functionality. These tests cover the following aspects:
+
+Scan Method: Tests that items can be scanned into the checkout system, handling scenarios such as existing items, non-existing items, and items with empty names.
+
+GetTotalPrice Method: Tests the calculation of the total price considering the unit prices of items and any special pricing rules. It verifies scenarios with no items scanned and with various combinations of scanned items.

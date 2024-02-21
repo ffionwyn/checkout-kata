@@ -63,3 +63,4 @@ func (c *Checkout) getItemCounts() map[string]int {
 	}
 	return itemQuantities
 }
+
