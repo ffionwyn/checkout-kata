@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // uses checkout system by scanning items and calculating the total price.
 func main() {

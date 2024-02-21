@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // check out struct to represent the checkout system.
 type Checkout struct {
@@ -25,10 +27,9 @@ func (c *Checkout) Scan(itemName string) error {
     if item.Name == "" {
         return fmt.Errorf("invalid item name: %s", itemName)
     }
-    if item.SpecialPrice.Quantity <= 0 || item.SpecialPrice.Price <= 0 {
-        return fmt.Errorf("invalid special price for item %s", itemName)
-    }
+
     c.cart[itemName]++
+
     return nil
 }
 
