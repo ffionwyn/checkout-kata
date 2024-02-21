@@ -48,4 +48,10 @@ func main() {
         return
     }
     fmt.Println("Total Price:", totalPrice) 
+
+    itemQuantities := checkout.getItemCounts()
+fmt.Println("Item Quantities:")
+for itemName, quantity := range itemQuantities {
+    fmt.Printf("%s: %d\n", itemName, quantity)
+}
 }

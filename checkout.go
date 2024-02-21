@@ -54,3 +54,11 @@ func (c *Checkout) GetTotalPrice() (int, error) {
     }
     return totalPrice, nil
 }
+
+func (c *Checkout) getItemCounts() map[string]int {
+    itemQuantities := make(map[string]int)
+    for itemName, quantity := range c.cart {
+        itemQuantities[itemName] = quantity
+    }
+    return itemQuantities
+}
