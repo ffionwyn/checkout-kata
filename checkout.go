@@ -20,45 +20,45 @@ func StartCheckout(items map[string]Item) *Checkout {
 
 // scan adds an item to the empty cart.
 func (c *Checkout) Scan(itemName string) error {
-    item, ok := c.items[itemName]
-    if !ok {
-        return fmt.Errorf("item %s not found", itemName)
-    }
-    if item.Name == "" {
-        return fmt.Errorf("invalid item name: %s", itemName)
-    }
+	item, ok := c.items[itemName]
+	if !ok {
+		return fmt.Errorf("item %s not found", itemName)
+	}
+	if item.Name == "" {
+		return fmt.Errorf("invalid item name: %s", itemName)
+	}
 
-    c.cart[itemName]++
+	c.cart[itemName]++
 
-    return nil
+	return nil
 }
 
 // get total price calculates the total price of the items in the cart.
 func (c *Checkout) GetTotalPrice() (int, error) {
-    totalPrice := 0
-    for itemName, quantity := range c.cart {
-        item := c.items[itemName]
-        specialPrice := item.SpecialPrice
-        if specialPrice.Quantity > 0 && quantity >= specialPrice.Quantity {
-            if specialPrice.Quantity <= 0 || specialPrice.Price <= 0 {
-                return 0, fmt.Errorf("invalid special price configuration for item %s", itemName)
-            }
-            specialOfferCount := quantity / specialPrice.Quantity
-            totalPrice += specialOfferCount * specialPrice.Price
-            quantity %= specialPrice.Quantity
-        }
-        if item.UnitPrice <= 0 {
-            return 0, fmt.Errorf("invalid unit price for item %s", itemName)
-        }
-        totalPrice += quantity * item.UnitPrice
-    }
-    return totalPrice, nil
+	totalPrice := 0
+	for itemName, quantity := range c.cart {
+		item := c.items[itemName]
+		specialPrice := item.SpecialPrice
+		if specialPrice.Quantity > 0 && quantity >= specialPrice.Quantity {
+			if specialPrice.Quantity <= 0 || specialPrice.Price <= 0 {
+				return 0, fmt.Errorf("invalid special price configuration for item %s", itemName)
+			}
+			specialOfferCount := quantity / specialPrice.Quantity
+			totalPrice += specialOfferCount * specialPrice.Price
+			quantity %= specialPrice.Quantity
+		}
+		if item.UnitPrice <= 0 {
+			return 0, fmt.Errorf("invalid unit price for item %s", itemName)
+		}
+		totalPrice += quantity * item.UnitPrice
+	}
+	return totalPrice, nil
 }
 
 func (c *Checkout) getItemCounts() map[string]int {
-    itemQuantities := make(map[string]int)
-    for itemName, quantity := range c.cart {
-        itemQuantities[itemName] = quantity
-    }
-    return itemQuantities
+	itemQuantities := make(map[string]int)
+	for itemName, quantity := range c.cart {
+		itemQuantities[itemName] = quantity
+	}
+	return itemQuantities
 }
