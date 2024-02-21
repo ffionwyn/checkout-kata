@@ -11,7 +11,7 @@ func main() {
 			Name:      "A",
 			UnitPrice: 50,
 			SpecialPrice: SpecialPrice{
-				Quantity: 3, // special price: 3 for 130
+				Quantity: 3, 
 				Price:    130,
 			},
 		},
@@ -19,7 +19,7 @@ func main() {
 			Name:      "B",
 			UnitPrice: 30,
 			SpecialPrice: SpecialPrice{
-				Quantity: 2, // special price: 2 for 45
+				Quantity: 2, 
 				Price:    45,
 			},
 		},
@@ -34,13 +34,13 @@ func main() {
 	}
 
 	checkout := StartCheckout(items)
-	checkout.Scan("A") // trigger special price for A
+	checkout.Scan("A") 
 	checkout.Scan("A")
 	checkout.Scan("A")
-	checkout.Scan("B") // trigger special price for B
+	checkout.Scan("B") 
 	checkout.Scan("B")
-	checkout.Scan("C") // normal price for C
-	checkout.Scan("D") // normal price for D
+	checkout.Scan("C") 
+	checkout.Scan("D") 
 
 	totalPrice, err := checkout.GetTotalPrice()
 	if err != nil {

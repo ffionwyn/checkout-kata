@@ -55,6 +55,7 @@ func (c *Checkout) GetTotalPrice() (int, error) {
 	return totalPrice, nil
 }
 
+// map containing quantities of each item in the cart, key is item names and val is quantity.
 func (c *Checkout) getItemCounts() map[string]int {
 	itemQuantities := make(map[string]int)
 	for itemName, quantity := range c.cart {
